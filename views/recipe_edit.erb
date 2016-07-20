@@ -20,5 +20,13 @@
     <input type="text" name="instructions" id="instructions" value="<%= @recipe.instructions() %>">
   </div>
 
+  <div class="">
+    <h4>Add a tag to this recipe:</h4>
+    <% @tags.each() do |tag| %>
+      <input type="radio" name="<%= tag.id() %>" id="<%= tag.id() %>" value="<%= tag.id() %>">
+      <label for="<%= tag.id() %>"><%= tag.name() %></label>
+    <% end %>
+  </div>
+
   <button class="btn" type="submit" name="button">Edit Recipe</button>
 </form>

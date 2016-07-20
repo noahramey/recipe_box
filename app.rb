@@ -73,15 +73,24 @@ end
 
 get('/recipes/:id/edit') do
   @recipe = Recipe.find(params[:id])
+  @tags = Tag.all()
   erb(:recipe_edit)
 end
 
 patch('/recipes/:id') do
   @recipe = Recipe.find(params[:id])
+  @tags = Tag.all()
   name = params['name']
   prep_time = params[:prep_time]
   cook_time = params[:cook_time]
   instructions = params[:instructions]
+  @tags.each() do |tag|
+    tag_id = params["#{tag.id()}"]
+    if tag_id
+      tag = Tag.find((tag_id).to_i())
+      @recipe.tags.push(tag)
+    end
+  end
   @recipe.update({name: name, prep_time: prep_time, cook_time: cook_time, instructions: instructions})
   redirect("/recipes/#{@recipe.id()}")
 end
@@ -92,6 +101,12 @@ delete('/recipes/:id') do
   redirect('/recipes')
 end
 
+delete('/recipes/:recipe_id/tags/:tag_id') do
+  @recipe = Recipe.find(params['recipe_id'])
+  @tag = Tag.find(params['tag_id'])
+  @recipe.tags.destroy(@tag)
+  redirect("/recipes/#{@recipe.id()}")
+end
 
 #########################
 # ingredients

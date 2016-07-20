@@ -1,4 +1,15 @@
 <h2 class="teal-text darken-2"><%= @recipe.name() %></h2>
+
+<% @recipe.tags.each() do |tag| %>
+  <p>
+    <a href="/tags/<%= tag.id() %>">Tag: <%= tag.name() %></a>
+    <form action="/recipes/<%= @recipe.id() %>/tags/<%= tag.id() %>" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <button class="delete-button" type="submit"><i class="material-icons">delete</i></button>
+    </form>
+  </p>
+<% end %>
+<hr>
 <p>Prep Time: <%= @recipe.prep_time() %></p>
 <p>Cook Time: <%= @recipe.cook_time() %></p>
 <hr>
