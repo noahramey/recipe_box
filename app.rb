@@ -68,12 +68,14 @@ end
 
 get('/recipes/:id') do
   @recipe = Recipe.find(params['id'])
+  @ingredients = Ingredient.all()
   erb(:recipe)
 end
 
 get('/recipes/:id/edit') do
   @recipe = Recipe.find(params[:id])
   @tags = Tag.all()
+  @ingredients = Ingredient.all()
   erb(:recipe_edit)
 end
 
@@ -92,6 +94,19 @@ patch('/recipes/:id') do
     end
   end
   @recipe.update({name: name, prep_time: prep_time, cook_time: cook_time, instructions: instructions})
+  redirect("/recipes/#{@recipe.id()}")
+end
+
+patch('/recipes/:id/ingredients') do
+  @recipe = Recipe.find(params[:id])
+  @ingredients = Ingredient.all()
+  @ingredients.each() do |ingredient|
+    ingredient_id = params["#{ingredient.id()}"]
+    if ingredient_id
+      ingredient = Ingredient.find((ingredient_id).to_i())
+      @recipe.ingredients.push(ingredient)
+    end
+  end
   redirect("/recipes/#{@recipe.id()}")
 end
 

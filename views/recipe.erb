@@ -16,4 +16,24 @@
 <h5 class="teal-text darken-2">Instructions:</h5>
 <p><%= @recipe.instructions() %></p>
 
+<% if @recipe.ingredients.any?() %>
+  <h5 class="teal-text darken-2">Ingredients</h5>
+  <% @recipe.ingredients.each() do |ingredient| %>
+    <p><a href="/ingredients/<%= ingredient.id() %>"><%= ingredient.name() %></a></p>
+  <% end %>
+<% end %>
+
+<h5 class="teal-text darken-2">Add Ingredients:</h5>
+
+<!-- MAKE CONDITIONAL SO ALREADY LINKED INGREDIENTS DO NOT SHOW UP -->
+<form class="" action="/recipes/<%= @recipe.id() %>/ingredients" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <% @ingredients.each() do |ingredient| %>
+    <input type="radio" name="<%= ingredient.id() %>" id="<%= ingredient.id() %>" value="<%= ingredient.id() %>">
+    <label for="<%= ingredient.id() %>"><%= ingredient.name() %></label>
+  <% end %>
+
+  <button class="btn" type="submit" name="button">Add Ingredients</button>
+</form>
+<br>
 <a class="btn" href="/recipes/<%= @recipe.id() %>/edit">Edit</a>

@@ -22,6 +22,7 @@
 
   <div class="">
     <h4>Add a tag to this recipe:</h4>
+    <!-- MAKE CONDITIONAL SO ALREADY LINKED TAGS DO NOT SHOW UP -->
     <% @tags.each() do |tag| %>
       <input type="radio" name="<%= tag.id() %>" id="<%= tag.id() %>" value="<%= tag.id() %>">
       <label for="<%= tag.id() %>"><%= tag.name() %></label>
