@@ -2,9 +2,7 @@
 
 <% if @tags.any?() %>
   <% @tags.each() do |tag| %>
-    <div class="row">
-      <h3><a href="/tags/<%= tag.id() %>"><%= tag.name() %></a></h3>
-    </div>
+    <h3><a class="amber-text darken-1" href="/tags/<%= tag.id() %>"><%= tag.name() %></a></h3>
   <% end %>
 <% end %>
 

@@ -1,6 +1,6 @@
 require('bundler/setup')
 Bundler.require(:default)
-Dir[File.dirname(__FILE__) + 'lib/*.rb'].each { |file| require file }
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 
 
 get('/') do
@@ -38,6 +38,12 @@ patch('/tags/:id') do
   redirect("/tags/#{@tag.id()}")
 end
 
+delete('/tags/:id') do
+  @tag = Tag.find(params[:id])
+  @tag.destroy()
+  redirect('/tags')
+end
+
 
 #########################
 # recipes
@@ -47,10 +53,83 @@ get('/recipes') do
   erb(:recipes)
 end
 
+get("/recipes/new") do
+  erb(:recipe_form)
+end
+
+post('/recipes') do
+  name = params['name']
+  prep_time = params[:prep_time]
+  cook_time = params[:cook_time]
+  instructions = params[:instructions]
+  @recipe = Recipe.create({name: name, prep_time: prep_time, cook_time: cook_time, instructions: instructions})
+  redirect("/recipes")
+end
+
+get('/recipes/:id') do
+  @recipe = Recipe.find(params['id'])
+  erb(:recipe)
+end
+
+get('/recipes/:id/edit') do
+  @recipe = Recipe.find(params[:id])
+  erb(:recipe_edit)
+end
+
+patch('/recipes/:id') do
+  @recipe = Recipe.find(params[:id])
+  name = params['name']
+  prep_time = params[:prep_time]
+  cook_time = params[:cook_time]
+  instructions = params[:instructions]
+  @recipe.update({name: name, prep_time: prep_time, cook_time: cook_time, instructions: instructions})
+  redirect("/recipes/#{@recipe.id()}")
+end
+
+delete('/recipes/:id') do
+  @recipe = Recipe.find(params[:id])
+  @recipe.destroy()
+  redirect('/recipes')
+end
+
+
 #########################
 # ingredients
 #########################
 get('/ingredients') do
   @ingredients = Ingredient.all()
   erb(:ingredients)
+end
+
+post('/ingredients') do
+  name = params[:name]
+  quantity = params[:quantity]
+  portion_size = params[:portion_size]
+  @ingredient = Ingredient.create({name: name, quantity: quantity, portion_size: portion_size})
+  redirect("/ingredients")
+end
+
+get('/ingredients/:id') do
+  @ingredient = Ingredient.find(params['id'])
+  erb(:ingredient)
+end
+
+get('/ingredients/:id/edit') do
+  @ingredient = Ingredient.find(params[:id])
+  erb(:ingredient_edit)
+end
+
+patch('/ingredients/:id') do
+  @ingredient = Ingredient.find(params[:id])
+  name = params[:name]
+  quantity = params[:quantity]
+  portion_size = params[:portion_size]
+  @ingredient.update({name: name, quantity: quantity, portion_size: portion_size})
+  redirect("/ingredients/#{@ingredient.id()}")
+end
+
+delete('/ingredients/:id') do
+  @ingredient = Ingredient.find(params[:id])
+  @ingredient.destroy()
+  redirect('/ingredients')
 end

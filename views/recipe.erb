@@ -1,0 +1,8 @@
+<h2 class="teal-text darken-2"><%= @recipe.name() %></h2>
+<p>Prep Time: <%= @recipe.prep_time() %></p>
+<p>Cook Time: <%= @recipe.cook_time() %></p>
+<hr>
+<h5 class="teal-text darken-2">Instructions:</h5>
+<p><%= @recipe.instructions() %></p>
+
+<a class="btn" href="/recipes/<%= @recipe.id() %>/edit">Edit</a>

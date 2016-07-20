@@ -1,0 +1,19 @@
+<h2>Edit "<%= @ingredient.name() %>"</h2>
+
+<form action="/ingredients/<%= @ingredient.id() %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <div class="input-field">
+    <input type="text" name="name" id="name">
+    <label for="name">Name:</label>
+  </div>
+  <div class="input-field">
+    <input type="text" name="quantity" id="quantity">
+    <label for="quantity">Quantity:</label>
+  </div>
+  <div class="input-field">
+    <input type="text" name="portion_size" id="portion_size">
+    <label for="portion_size">Portion Size:</label>
+  </div>
+
+  <button class="btn" type="submit">Edit Ingredient</button>
+</form>

@@ -1,0 +1,4 @@
+<h2><%= @ingredient.name() %></h2>
+<p>Amount: <%= @ingredient.quantity() %> <%= @ingredient.portion_size() %></p>
+
+<a class="btn" href="/ingredients/<%= @ingredient.id() %>/edit">Edit</a>
