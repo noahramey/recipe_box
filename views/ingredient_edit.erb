@@ -2,17 +2,17 @@
 
 <form action="/ingredients/<%= @ingredient.id() %>" method="post">
   <input type="hidden" name="_method" value="patch">
-  <div class="input-field">
-    <input type="text" name="name" id="name">
+  <div>
     <label for="name">Name:</label>
+    <input type="text" name="name" id="name" value="<%= @ingredient.name() %>">
   </div>
-  <div class="input-field">
-    <input type="text" name="quantity" id="quantity">
+  <div>
     <label for="quantity">Quantity:</label>
+    <input type="text" name="quantity" id="quantity" value="<%= @ingredient.quantity() %>">
   </div>
-  <div class="input-field">
-    <input type="text" name="portion_size" id="portion_size">
+  <div>
     <label for="portion_size">Portion Size:</label>
+    <input type="text" name="portion_size" id="portion_size" value="<%= @ingredient.portion_size() %>">
   </div>
 
   <button class="btn" type="submit">Edit Ingredient</button>
