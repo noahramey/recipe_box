@@ -1,17 +1,38 @@
-<h2>Tags</h2>
-
-<% if @tags.any?() %>
-  <% @tags.each() do |tag| %>
-    <h3><a class="amber-text darken-1" href="/tags/<%= tag.id() %>"><%= tag.name() %></a></h3>
-  <% end %>
-<% end %>
-
-<h3>Add a New Tag</h3>
-<form action="/tags" method="post">
-  <div class="input-field">
-    <input type="text" name="name" id="name">
-    <label for="name">Name of Tag:</label>
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <h2 class="center teal-text darken-2">Tags</h2>
+        <% if @tags.any?() %>
+          <% @tags.each() do |tag| %>
+            <ul class="collapsible popout" data-collapsible="accordion">
+              <li>
+                <div class="collapsible-header center"><%= tag.name() %> Recipes <a href="/tags/<%= tag.id() %>/edit"><i class="material-icons">edit</i></a></div>
+                <div class="collapsible-body collection">
+                  <% tag.recipes.each() do |recipe| %>
+                    <a class="collection-item center" href="/recipes/<%= recipe.id() %>"><%= recipe.name() %></a>
+                  <% end %>
+                </div>
+              </li>
+            </ul>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <h4 class="center teal-text darken-2">Add a New Tag</h4>
+        <form action="/tags" method="post">
+          <div class="input-field">
+            <input type="text" name="name" id="name">
+            <label for="name">Name of Tag:</label>
+          </div>
 
-  <button class="btn" type="submit">Create</button>
-</form>
+          <button class="btn" type="submit">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

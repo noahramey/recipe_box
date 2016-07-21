@@ -2,9 +2,9 @@
 
 <form action="/tags/<%= @tag.id() %>" method="post">
   <input type="hidden" name="_method" value="patch">
-  <div class="input-field">
-    <input type="text" name="name" id="name">
+  <div class="">
     <label for="name">Name of Tag:</label>
+    <input type="text" name="name" id="name" value="<%= @tag.name() %>">
   </div>
 
   <button class="btn" type="submit">Edit Tag</button>

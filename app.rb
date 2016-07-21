@@ -21,10 +21,10 @@ post('/tags') do
   redirect("/tags")
 end
 
-get('/tags/:id') do
-  @tag = Tag.find(params['id'])
-  erb(:tag)
-end
+# get('/tags/:id') do
+#   @tag = Tag.find(params['id'])
+#   erb(:tag)
+# end
 
 get('/tags/:id/edit') do
   @tag = Tag.find(params[:id])
@@ -35,7 +35,7 @@ patch('/tags/:id') do
   @tag = Tag.find(params[:id])
   name = params['name']
   @tag.update({name: name})
-  redirect("/tags/#{@tag.id()}")
+  redirect("/tags")
 end
 
 delete('/tags/:id') do
@@ -123,6 +123,14 @@ delete('/recipes/:recipe_id/tags/:tag_id') do
   redirect("/recipes/#{@recipe.id()}")
 end
 
+
+delete('/recipes/:recipe_id/ingredients/:ingredient_id') do
+  @recipe = Recipe.find(params['recipe_id'])
+  @ingredient = Ingredient.find(params['ingredient_id'])
+  @recipe.ingredients.destroy(@ingredient)
+  redirect("/recipes/#{@recipe.id()}")
+end
+
 #########################
 # ingredients
 #########################
@@ -139,11 +147,6 @@ post('/ingredients') do
   redirect("/ingredients")
 end
 
-get('/ingredients/:id') do
-  @ingredient = Ingredient.find(params['id'])
-  erb(:ingredient)
-end
-
 get('/ingredients/:id/edit') do
   @ingredient = Ingredient.find(params[:id])
   erb(:ingredient_edit)
@@ -155,7 +158,7 @@ patch('/ingredients/:id') do
   quantity = params[:quantity]
   portion_size = params[:portion_size]
   @ingredient.update({name: name, quantity: quantity, portion_size: portion_size})
-  redirect("/ingredients/#{@ingredient.id()}")
+  redirect("/ingredients")
 end
 
 delete('/ingredients/:id') do

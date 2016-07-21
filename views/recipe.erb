@@ -1,39 +1,73 @@
-<h2 class="teal-text darken-2"><%= @recipe.name() %></h2>
+<div class="row valign-wrapper">
+  <div class="">
+    <h1 class="teal-text darken-2 valign"><%= @recipe.name() %></h1>
+  </div>
+  <div class="">
+    <a class="btn amber valign" href="/recipes/<%= @recipe.id() %>/edit">Edit</a>
+  </div>
+</div>
 
+<h6 class="teal-text darken-2">Tags:</h6>
 <% @recipe.tags.each() do |tag| %>
-  <p>
-    <a href="/tags/<%= tag.id() %>">Tag: <%= tag.name() %></a>
-    <form action="/recipes/<%= @recipe.id() %>/tags/<%= tag.id() %>" method="post">
+  <div class="chip">
+    <a href="/tags"><%= tag.name() %></a>
+    <form class="right" id="<%= tag.name() %>" action="/recipes/<%= @recipe.id() %>/tags/<%= tag.id() %>" method="post">
       <input type="hidden" name="_method" value="delete">
-      <button class="delete-button" type="submit"><i class="material-icons">delete</i></button>
+      <a href="#" onclick="document.getElementById('<%= tag.name() %>').submit(); return false;"><i class="material-icons">close</i></a>
     </form>
-  </p>
+  </div>
 <% end %>
-<hr>
-<p>Prep Time: <%= @recipe.prep_time() %></p>
-<p>Cook Time: <%= @recipe.cook_time() %></p>
-<hr>
-<h5 class="teal-text darken-2">Instructions:</h5>
-<p><%= @recipe.instructions() %></p>
+<br><br>
 
-<% if @recipe.ingredients.any?() %>
-  <h5 class="teal-text darken-2">Ingredients</h5>
-  <% @recipe.ingredients.each() do |ingredient| %>
-    <p><a href="/ingredients/<%= ingredient.id() %>"><%= ingredient.name() %></a></p>
-  <% end %>
+<div class="card-panel">
+  <div class="row">
+    <div class="col s6">
+      <% if @recipe.ingredients.any?() %>
+      <h5 class="teal-text darken-2">Ingredients</h5>
+      <% @recipe.ingredients.each() do |ingredient| %>
+      <div class="chip">
+        <a href="/ingredients"><%= ingredient.name() %></a>
+        <form class="right" id="<%= ingredient.name() %>" action="/recipes/<%= @recipe.id() %>/ingredients/<%= ingredient.id() %>" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <a href="#" onclick="document.getElementById('<%= ingredient.name() %>').submit(); return false;"><i class="material-icons">close</i></a>
+        </form>
+      </div>
+      <% end %>
+      <% end %>
+      <br><br>
+      <div class="row">
+        <div class="col s6">
+          <h6 class="teal-text darken-2">Prep Time:</h6>
+          <p><%= @recipe.prep_time() %></p>
+        </div>
+        <div class="col s6">
+          <h6 class="teal-text darken-2">Cook Time:</h6>
+          <p><%= @recipe.cook_time() %></p>
+        </div>
+      </div>
+
+    </div>
+    <div class="col s6">
+      <h5 class="teal-text darken-2">Instructions:</h5>
+      <p><%= @recipe.instructions() %></p>
+    </div>
+  </div>
+</div>
+
+
+
+<% if @recipe.ingredients.any?() == false %>
+  <h5 class="teal-text darken-2">Add Ingredients:</h5>
+
+  <form class="" action="/recipes/<%= @recipe.id() %>/ingredients" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <% @ingredients.each() do |ingredient| %>
+      <% if @recipe.ingredients().include?(ingredient) == false %>
+        <input type="radio" name="<%= ingredient.id() %>" id="<%= ingredient.id() %>" value="<%= ingredient.id() %>">
+        <label for="<%= ingredient.id() %>"><%= ingredient.name() %></label>
+      <% end %>
+    <% end %>
+
+    <p><button class="btn" type="submit" name="button">Add Ingredients</button></p>
+  </form>
 <% end %>
-
-<h5 class="teal-text darken-2">Add Ingredients:</h5>
-
-<!-- MAKE CONDITIONAL SO ALREADY LINKED INGREDIENTS DO NOT SHOW UP -->
-<form class="" action="/recipes/<%= @recipe.id() %>/ingredients" method="post">
-  <input type="hidden" name="_method" value="patch">
-  <% @ingredients.each() do |ingredient| %>
-    <input type="radio" name="<%= ingredient.id() %>" id="<%= ingredient.id() %>" value="<%= ingredient.id() %>">
-    <label for="<%= ingredient.id() %>"><%= ingredient.name() %></label>
-  <% end %>
-
-  <button class="btn" type="submit" name="button">Add Ingredients</button>
-</form>
-<br>
-<a class="btn" href="/recipes/<%= @recipe.id() %>/edit">Edit</a>

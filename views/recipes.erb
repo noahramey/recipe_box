@@ -3,7 +3,7 @@
   <% if @recipes.any?() %>
     <% @recipes.each() do |recipe| %>
       <div class="col s6">
-        <div class="card blue lighten-4 hoverable">
+        <div class="card grey lighten-4 hoverable">
           <div class="card-image waves-effect waves-block waves-light">
             <img class="activator" src="<%= url('img/pancakes.jpeg') %>" alt="A big yacht" />
             <span class="card-title activator"></span>
@@ -16,12 +16,18 @@
             <p>Prep Time: <%= recipe.prep_time() %></p>
             <p>Cook Time: <%= recipe.cook_time() %></p>
             <hr>
-            <form class="" action="/recipes/<%= recipe.id() %>" method="post">
-              <input name="_method" type="hidden" value="delete">
-              <button class="delete-button btn" type="submit">Delete <i class="material-icons">delete</i></button>
-            </form>
             <br>
-            <a class="btn" href="/recipes/<%= recipe.id() %>/edit">Edit <i class="material-icons">edit</i></a>
+            <div class="row">
+              <div class="col s6">
+                <form class="right" action="/recipes/<%= recipe.id() %>" method="post">
+                  <input name="_method" type="hidden" value="delete">
+                  <button class="btn-large red" type="submit">Delete <i class="material-icons">delete</i></button>
+                </form>
+              </div>
+              <div class="col s6">
+                <a class="left amber btn-large" href="/recipes/<%= recipe.id() %>/edit">Edit <i class="material-icons">edit</i></a>
+              </div>
+            </div>
           </div>
           <div class="card-action valign-wrapper">
             <h5><%= recipe.name() %></h5>

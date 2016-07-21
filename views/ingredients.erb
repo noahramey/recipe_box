@@ -1,27 +1,46 @@
-<h2>Ingredients</h2>
-
-<% if @ingredients.any?() %>
-  <% @ingredients.each() do |ingredient| %>
-    <div class="row">
-      <h3><a href="/ingredients/<%= ingredient.id() %>"><%= ingredient.name() %></a></h3>
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <h2 class="center teal-text darken-2">Ingredients</h2>
+        <% if @ingredients.any?() %>
+          <% @ingredients.each() do |ingredient| %>
+            <ul class="collapsible popout" data-collapsible="accordion">
+              <li>
+                <div class="collapsible-header center"><%= ingredient.name() %><a href="/ingredients/<%= ingredient.id() %>/edit"><i class="material-icons">edit</i></a></div>
+                <div class="collapsible-body collection">
+                  <% ingredient.recipes.each() do |recipe| %>
+                    <a class="collection-item center" href="/recipes/<%= recipe.id() %>"><%= recipe.name() %></a>
+                  <% end %>
+                </div>
+              </li>
+            </ul>
+          <% end %>
+        <% end %>
+      </div>
     </div>
-  <% end %>
-<% end %>
+  </div>
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <h4 class="center teal-text darken-2">Add a New Ingredient</h4>
+        <form action="/ingredients" method="post">
+          <div class="input-field">
+            <input type="text" name="name" id="name">
+            <label for="name">Name:</label>
+          </div>
+          <div class="input-field">
+            <input type="text" name="quantity" id="quantity">
+            <label for="quantity">Quantity:</label>
+          </div>
+          <div class="input-field">
+            <input type="text" name="portion_size" id="portion_size">
+            <label for="portion_size">Portion Size:</label>
+          </div>
 
-<h3>Add a New Ingredient</h3>
-<form action="/ingredients" method="post">
-  <div class="input-field">
-    <input type="text" name="name" id="name">
-    <label for="name">Name:</label>
+          <button class="btn" type="submit">Create</button>
+        </form>
+      </div>
+    </div>
   </div>
-  <div class="input-field">
-    <input type="text" name="quantity" id="quantity">
-    <label for="quantity">Quantity:</label>
-  </div>
-  <div class="input-field">
-    <input type="text" name="portion_size" id="portion_size">
-    <label for="portion_size">Portion Size:</label>
-  </div>
-
-  <button class="btn" type="submit">Create</button>
-</form>
+</div>
