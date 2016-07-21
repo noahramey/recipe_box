@@ -23,9 +23,9 @@ $ bundle install
 
 Use rake to setup your database:
 ```
-rake db:create
-rake db:migrate
-rake db:test:prepare
+$ rake db:create
+$ rake db:migrate
+$ rake db:test:prepare
 ```
 
 Start the webserver:
